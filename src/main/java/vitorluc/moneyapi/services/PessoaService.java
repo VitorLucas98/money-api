@@ -29,4 +29,17 @@ public class PessoaService {
         Pessoa pes = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pessoa de id: "+ id +", não encontrada !"));
         return new PessoaDTO(pes);
     }
+
+    @Transactional
+    public PessoaDTO save(PessoaDTO dto){
+        Pessoa pes = new Pessoa();
+        pes.setId(dto.getId());
+        pes.setNome(dto.getNome());
+        pes.setAtivo(dto.isAtivo());
+        pes.setNome(dto.getNome());
+        pes.setEndereco(dto.getEndereco());
+        pes = repository.save(pes);
+        return new PessoaDTO(pes);
+    }
+
 }
