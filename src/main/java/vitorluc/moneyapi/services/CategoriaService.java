@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vitorluc.moneyapi.entities.Categoria;
 import vitorluc.moneyapi.repositories.CategoriaRepository;
 import vitorluc.moneyapi.services.dtos.CategoriaDTO;
+import vitorluc.moneyapi.services.exceptions.ObjectNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class CategoriaService {
 
     @Transactional(readOnly = true)
     public CategoriaDTO findById(Long id){
-        Categoria cat = repository.findById(id).get();
+        Categoria cat = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Categoria de id: "+ id +", não encontrada !"));
         return new CategoriaDTO(cat);
     }
 
