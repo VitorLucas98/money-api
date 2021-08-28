@@ -8,6 +8,7 @@ import vitorluc.moneyapi.repositories.CategoriaRepository;
 import vitorluc.moneyapi.services.dtos.CategoriaDTO;
 import vitorluc.moneyapi.services.exceptions.ObjectNotFoundException;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,12 @@ public class CategoriaService {
         return new CategoriaDTO(cat);
     }
 
-
-
+    @Transactional
+    public CategoriaDTO save(CategoriaDTO categoriaDTO){
+        Categoria cat = new Categoria();
+        cat.setId(categoriaDTO.getId());
+        cat.setNome(categoriaDTO.getNome());
+        cat = repository.save(cat);
+        return new CategoriaDTO(cat);
+    }
 }
