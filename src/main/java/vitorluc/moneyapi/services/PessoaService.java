@@ -1,6 +1,7 @@
 package vitorluc.moneyapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,15 @@ public class PessoaService {
         pes.setEndereco(dto.getEndereco());
         pes = repository.save(pes);
         return new PessoaDTO(pes);
+    }
+
+
+    public void deletar(Long id){
+        try{
+            repository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ObjectNotFoundException("Pessoa de id: "+ id +", não encontrada !");
+        }
     }
 
 }

@@ -39,4 +39,10 @@ public class PessoaResource {
         pes.setId(id);
         return ResponseEntity.ok(service.save(pes));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }
