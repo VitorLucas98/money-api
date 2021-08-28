@@ -1,6 +1,7 @@
 package vitorluc.moneyapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vitorluc.moneyapi.entities.Categoria;
@@ -8,6 +9,7 @@ import vitorluc.moneyapi.repositories.CategoriaRepository;
 import vitorluc.moneyapi.services.dtos.CategoriaDTO;
 import vitorluc.moneyapi.services.exceptions.ObjectNotFoundException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,5 +39,13 @@ public class CategoriaService {
         cat.setNome(categoriaDTO.getNome());
         cat = repository.save(cat);
         return new CategoriaDTO(cat);
+    }
+
+    public void delete(Long id){
+        try{
+            repository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw  new ObjectNotFoundException("Categoria de id: "+ id +", não encontrada !");
+        }
     }
 }
