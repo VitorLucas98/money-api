@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vitorluc.moneyapi.entities.Categoria;
 import vitorluc.moneyapi.services.CategoriaService;
+import vitorluc.moneyapi.services.dtos.CategoriaDTO;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class CategoriaResource {
     private CategoriaService service;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll(){
+    public ResponseEntity<List<CategoriaDTO>> findAll(){
         return ResponseEntity.ok(service.findALl());
     }
 }
