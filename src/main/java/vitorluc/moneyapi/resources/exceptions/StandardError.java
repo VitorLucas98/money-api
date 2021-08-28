@@ -1,10 +1,13 @@
 package vitorluc.moneyapi.resources.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class StandardError implements Serializable {
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime timestamp;
     private Integer status;
     private String error;

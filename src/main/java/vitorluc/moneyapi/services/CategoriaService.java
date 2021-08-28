@@ -32,6 +32,10 @@ public class CategoriaService {
 
     @Transactional
     public CategoriaDTO save(CategoriaDTO categoriaDTO){
+        if (categoriaDTO.getId() != null){
+            Categoria cat = repository.findById(categoriaDTO.getId()).orElseThrow(
+                    () -> new ObjectNotFoundException("Categoria de id: " + categoriaDTO.getId() + ", não encontrada !"));
+        }
         Categoria cat = new Categoria();
         cat.setId(categoriaDTO.getId());
         cat.setNome(categoriaDTO.getNome());
