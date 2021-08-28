@@ -9,8 +9,6 @@ import vitorluc.moneyapi.repositories.CategoriaRepository;
 import vitorluc.moneyapi.services.dtos.CategoriaDTO;
 import vitorluc.moneyapi.services.exceptions.ObjectNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.stream.Collectors;
 
