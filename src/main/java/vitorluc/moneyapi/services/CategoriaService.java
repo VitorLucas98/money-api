@@ -22,5 +22,12 @@ public class CategoriaService {
         return cats.stream().map( x -> new CategoriaDTO(x)).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public CategoriaDTO findById(Long id){
+        Categoria cat = repository.findById(id).get();
+        return new CategoriaDTO(cat);
+    }
+
+
 
 }
