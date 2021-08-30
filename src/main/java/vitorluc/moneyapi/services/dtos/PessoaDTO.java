@@ -3,8 +3,11 @@ package vitorluc.moneyapi.services.dtos;
 import vitorluc.moneyapi.entities.Endereco;
 import vitorluc.moneyapi.entities.Pessoa;
 
+import java.io.Serializable;
 
-public class PessoaDTO {
+
+public class PessoaDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Embeddable
 public class Endereco implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String logradouro;
     private String complemento;
