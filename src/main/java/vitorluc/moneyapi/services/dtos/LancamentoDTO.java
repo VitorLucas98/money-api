@@ -1,21 +1,23 @@
 package vitorluc.moneyapi.services.dtos;
 
-import vitorluc.moneyapi.entities.Categoria;
-import vitorluc.moneyapi.entities.Lancamento;
-import vitorluc.moneyapi.entities.Pessoa;
-import vitorluc.moneyapi.entities.enums.TipoLancamento;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import vitorluc.moneyapi.entities.Lancamento;
+import vitorluc.moneyapi.entities.enums.TipoLancamento;
 
 public class LancamentoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
     private Long id;
+    
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVencimento;
+    
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPagamento;
     private Long valor;
     private String observacao;

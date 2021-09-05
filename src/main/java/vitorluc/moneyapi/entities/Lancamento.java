@@ -6,14 +6,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity(name = "tb_lancamento")
+@Entity
+@Table(name = "tb_lancamento")
 public class Lancamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDate dataVencimento;
     private LocalDate dataPagamento;
     private Long valor;

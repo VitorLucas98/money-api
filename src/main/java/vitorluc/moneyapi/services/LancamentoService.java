@@ -1,9 +1,17 @@
 package vitorluc.moneyapi.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import vitorluc.moneyapi.entities.Categoria;
 import vitorluc.moneyapi.entities.Lancamento;
 import vitorluc.moneyapi.entities.Pessoa;
@@ -12,9 +20,6 @@ import vitorluc.moneyapi.repositories.LancamentoRepository;
 import vitorluc.moneyapi.repositories.PessoaRepository;
 import vitorluc.moneyapi.services.dtos.LancamentoDTO;
 import vitorluc.moneyapi.services.exceptions.ObjectNotFoundException;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LancamentoService {
@@ -29,10 +34,19 @@ public class LancamentoService {
     private PessoaRepository pessoaRepository;
 
     @Transactional(readOnly = true)
-    public List<LancamentoDTO> findAll(){
-        return repository.findAll().stream().map(x -> new LancamentoDTO(x)).collect(Collectors.toList());
+    public Page<LancamentoDTO> findAllPaged(Pageable pageable, String observacao, String dataVencimentoInicial, String dataVencimentoFinal){
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateInicial = LocalDate.parse(dataVencimentoInicial,formatter);
+        LocalDate dateFinal = LocalDate.parse(dataVencimentoFinal,formatter);
+    	return repository.find(pageable, observacao, dateInicial, dateFinal).map(x -> new LancamentoDTO(x));
     }
-
+    
+    /*
+    @Transactional(readOnly = true)
+    public Page<LancamentoDTO> findAllPaged(Pageable pageable, String observacao){
+    	return repository.find(pageable, observacao).map(x -> new LancamentoDTO(x));
+    }
+    */
     @Transactional(readOnly = true)
     public LancamentoDTO findById(Long id){
         return new LancamentoDTO(repository.findById(id).orElseThrow(
@@ -50,7 +64,7 @@ public class LancamentoService {
         lancamento.setDataPagamento(dto.getDataPagamento());
         lancamento.setDataVencimento(dto.getDataVencimento());
         lancamento.setObservacao(dto.getObservacao());
-        //lancamento.setTipo(dto.getTipo());
+        lancamento.setTipo(dto.getTipo());
         lancamento.setValor(dto.getValor());
 
         Categoria cat = categoriaRepository.findById(dto.getIdCategoria()).orElseThrow(
